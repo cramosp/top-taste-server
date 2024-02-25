@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -rf dist && npm run tsc",
     "start": "npm run build && node dist/server.js",
-    "dev": "nodemon server.ts",
+    "dev": "nodemon ./src/server.ts",
     "tsc": "tsc",
     "prettier": "prettier --write './src/**/*.ts'"
   },
