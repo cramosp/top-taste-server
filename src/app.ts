@@ -22,6 +22,9 @@ app.use("/api", indexRoutes);
 import authRoutes from "./routes/auth.routes";
 app.use("/auth", authRoutes);
 
+import usersRoutes from "./routes/user.routes";
+app.use("/user", usersRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 import errorHandling from "./error-handling";
 errorHandling(app);
