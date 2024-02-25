@@ -22,6 +22,9 @@ app.use("/api", indexRoutes);
 import authRoutes from "./routes/auth.routes";
 app.use("/auth", authRoutes);
 
+import restaurantsRoutes from "./routes/restaurant.routes";
+app.use("/restaurants", restaurantsRoutes);
+
 import usersRoutes from "./routes/user.routes";
 app.use("/user", usersRoutes);
 

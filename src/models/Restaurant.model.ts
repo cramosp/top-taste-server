@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import {
   CuisineType,
   IRestaurant,
@@ -40,6 +40,7 @@ const restaurantSchema = new Schema<IRestaurant>({
   },
 });
 
-const Restaurant = mongoose.model<IRestaurant>("Restaurant", restaurantSchema);
-
-export default Restaurant;
+export const Restaurant = mongoose.model<IRestaurant>(
+  "Restaurant",
+  restaurantSchema
+);
