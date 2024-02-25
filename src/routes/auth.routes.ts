@@ -8,10 +8,12 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Require the User model in order to interact with the database
-import { User, UserDocument } from "../models/User.model";
+import { User } from "../models/User.model";
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 import { isAuthenticated } from "../middleware/jwt.middleware";
+import { AuthenticatedRequest } from "../core/types";
+import { IUser } from "../interfaces/user.interfaces";
 
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
@@ -43,7 +45,7 @@ router.post(
       const hashedPassword = bcrypt.hashSync(password, salt);
 
       // Create the new user in the database
-      const createdUser: UserDocument = await User.create({
+      const createdUser: IUser = await User.create({
         email,
         password: hashedPassword,
         name,
@@ -109,10 +111,6 @@ router.post(
     }
   }
 );
-
-interface AuthenticatedRequest extends Request {
-  payload?: string;
-}
 
 // GET  /auth/verify  -  Used to verify JWT stored on the client
 router.get(
