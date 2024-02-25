@@ -1,8 +1,10 @@
 import express, { NextFunction, Request, Response } from "express";
-import Restaurant from "../models/Restaurant.model";
+import { Restaurant } from "../models/Restaurant.model";
 import { IRestaurant } from "../interfaces/restaurant.interfaces";
 import { FilterQuery } from "mongoose";
 import { isAuthenticated } from "../middleware/jwt.middleware";
+import { AuthenticatedRequest } from "../core/types";
+
 const router = express.Router();
 
 // GET - '/' - List of all restaurants
@@ -18,9 +20,8 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
       query.cuisineType = req.query.cuisineType;
     }
 
-    const restaurants: IRestaurant[] = await Restaurant.find<IRestaurant>(
-      query
-    );
+    const restaurants: IRestaurant[] =
+      await Restaurant.find<IRestaurant>(query);
 
     res.status(200).json(restaurants);
   } catch (error) {
@@ -71,9 +72,8 @@ router.post(
         createdBy: authenticatedUserId,
       }));
 
-      const restaurantsCreated = await Restaurant.insertMany<IRestaurant>(
-        restaurantsToCreate
-      );
+      const restaurantsCreated =
+        await Restaurant.insertMany<IRestaurant>(restaurantsToCreate);
 
       res.status(200).json(restaurantsCreated);
     } catch (error) {
@@ -82,12 +82,6 @@ router.post(
     }
   }
 );
-
-interface AuthenticatedRequest extends Request {
-  payload?: {
-    _id: string;
-  };
-}
 
 // PUT - "/:restaurantId"        Update specified restaurant by ID
 router.put(
@@ -100,7 +94,10 @@ router.put(
 
       const restaurant = await Restaurant.findById<IRestaurant>(restaurantId);
 
-      if (restaurant?.createdBy !== authenticatedUserId) {
+      // Gets  user id from Schema.Types.ObjectId
+      const createdBy = restaurant?.createdBy.toString();
+
+      if (createdBy !== authenticatedUserId) {
         res.status(403).json({ message: "Forbidden" });
       }
 
@@ -133,13 +130,15 @@ router.delete(
 
       const restaurant = await Restaurant.findById<IRestaurant>(restaurantId);
 
-      if (restaurant?.createdBy !== authenticatedUserId) {
+      // Gets  user id from Schema.Types.ObjectId
+      const createdBy = restaurant?.createdBy.toString();
+
+      if (createdBy !== authenticatedUserId) {
         res.status(403).json({ message: "Forbidden" });
       }
 
-      const restaurantDeleted = await Restaurant.findByIdAndDelete<IRestaurant>(
-        restaurantId
-      );
+      const restaurantDeleted =
+        await Restaurant.findByIdAndDelete<IRestaurant>(restaurantId);
 
       if (restaurantDeleted !== null) {
         res.status(200).json(restaurantDeleted);
@@ -152,3 +151,5 @@ router.delete(
     }
   }
 );
+
+export default router;

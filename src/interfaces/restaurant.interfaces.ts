@@ -1,5 +1,4 @@
 import { Document, Types } from "mongoose";
-import { IUser } from "./user.interfaces";
 
 export interface IReview extends Document {
   name: string;
