@@ -7,11 +7,12 @@ interface IUser extends Document {
   restaurants: Types.ObjectId[];
 }
 
-const userSchema= new Schema<IUser>(
-  {name: {
-    type: String,
-    required: [true, "Name is required."],
-  },
+const userSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required."],
+    },
     email: {
       type: String,
       required: [true, "Email is required."],
