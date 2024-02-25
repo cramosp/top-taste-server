@@ -1,17 +1,12 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model } from "mongoose";
+import { IUser } from "../interfaces/user.interfaces";
 
-interface IUser extends Document {
-  name: string;
-  email: string;
-  password: string;
-  restaurants: Types.ObjectId[];
-}
-
-const userSchema= new Schema<IUser>(
-  {name: {
-    type: String,
-    required: [true, "Name is required."],
-  },
+const userSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required."],
+    },
     email: {
       type: String,
       required: [true, "Email is required."],
@@ -20,7 +15,7 @@ const userSchema= new Schema<IUser>(
       type: String,
       required: [true, "Password is required."],
     },
-    restaurants: [
+    favoriteRestaurants: [
       {
         type: Schema.Types.ObjectId,
         ref: "Restaurant",
@@ -33,4 +28,3 @@ const userSchema= new Schema<IUser>(
 );
 
 export const User = model<IUser>("User", userSchema);
-export type UserDocument = IUser;
