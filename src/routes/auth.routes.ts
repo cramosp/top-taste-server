@@ -117,7 +117,7 @@ router.post(
 router.get(
   "/verify",
   isAuthenticated,
-  (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  (req: AuthenticatedRequest, res: Response) => {
     console.log(`req.payload`, req);
 
     // Send back the token payload object containing the user data

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Document, Types } from "mongoose";
 
 export interface IReview extends Document {
