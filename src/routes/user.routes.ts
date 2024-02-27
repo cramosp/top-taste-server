@@ -14,7 +14,9 @@ router.get(
     try {
       const authenticatedUserId = req.payload?._id;
 
-      const authenticatedUser = await User.findById<IUser>(authenticatedUserId);
+      const authenticatedUser = await User.findById<IUser>(
+        authenticatedUserId
+      ).populate("favoriteRestaurants");
 
       if (authenticatedUser !== null) {
         res.status(200).json(authenticatedUser);
