@@ -105,7 +105,14 @@ router.post(
         });
 
         // Send the token as the response
-        res.status(200).json({ user: payload, authToken: authToken });
+        res.status(200).json({
+          user: {
+            _id: foundUser._id,
+            name: foundUser.name,
+            email: foundUser.email,
+          },
+          authToken: authToken,
+        });
       } else {
         res.status(401).json({ message: "Unable to authenticate the user" });
       }
