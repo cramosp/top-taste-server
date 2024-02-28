@@ -52,12 +52,14 @@ router.post(
         name,
       });
 
-      // Deconstruct the newly created user object to omit the password
-      // We should never expose passwords publicly
-      const { _id } = createdUser;
-
       // Send a json response containing the user object
-      res.status(201).json({ user: { email, _id } });
+      res.status(201).json({
+        user: {
+          _id: createdUser._id,
+          name: createdUser.name,
+          email: createdUser.email,
+        },
+      });
     } catch (error) {
       next(error); // In this case, we send error handling to the error handling middleware.
     }
@@ -103,7 +105,7 @@ router.post(
         });
 
         // Send the token as the response
-        res.status(200).json({ authToken });
+        res.status(200).json({ user: payload, authToken: authToken });
       } else {
         res.status(401).json({ message: "Unable to authenticate the user" });
       }
