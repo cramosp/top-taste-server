@@ -42,13 +42,11 @@ router.put(
       const authenticatedUserId = req.payload?._id;
 
       // Find user by id and update favoriteRestaurants.
-      // $addToSet: { favoriteRestaurants: { $each: restaurantIds } } - This line adds
-      // restaurants coming in the payload into the user favoriteRestaurants field.
       const userUpdated = await User.findByIdAndUpdate<IUser>(
         authenticatedUserId,
-        { $addToSet: { favoriteRestaurants: { $each: req.body } } },
+        { favoriteRestaurants: req.body },
         { new: true }
-      );
+      ).populate("favoriteRestaurants");
 
       if (userUpdated !== null) {
         res.status(200).json(userUpdated);
