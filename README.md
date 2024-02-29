@@ -1,4 +1,4 @@
-# <img src="public/toptastelogo.png" alt="App Icon" width="30" height="30"/> Top Taste Server - REST API
+# <img src="src/assets/toptastelogo.png" alt="App Icon" width="30" height="30"/> Top Taste Server - REST API
 
 Top Taste Server is a robust backend built with Express and TypeScript. It leverages the power of Express for API development and TypeScript for adding type safety and enhancing the development experience. This server is configured with essential middleware and tools for security, CORS, environment variable management among others.
 
